@@ -10,7 +10,7 @@ from string import punctuation
 
 def unique_ngrams_ratio(text, n):
   text_sent = sent_tokenize(text) #split sentence
-  uniq_ngram_list = []
+  ngram_list = []
 
   for sent in text_sent:
     # Word tokenize with removing stopwords: punctuations
@@ -18,57 +18,56 @@ def unique_ngrams_ratio(text, n):
     tokens = [token for token in word_tokenize(sent) if token not in stoplist]
 
     ngram = ngrams(tokens, n)
-    ngram_list = []
-
     for grams in ngram:
       ngram_list.append(grams) 
 
-    print("\nN-grams: ")
-    print(ngram_list)
-
-    if(len(ngram_list) > 0):
-      print("Count ngram: ", len(ngram_list))
-      print("Count Unique n-grams: ", len(np.unique(np.array(ngram_list), axis=0)))
-
-      uniq_ng_ratio = len(np.unique(np.array(ngram_list), axis=0)) / len(ngram_list)
-      uniq_ngram_list.append(uniq_ng_ratio)
-
-  if(len(uniq_ngram_list) > 0):
-    mean_uniq = sum(uniq_ngram_list)/len(uniq_ngram_list)
-    return mean_uniq
+  if(len(ngram_list) > 0):
+    uniq_ng_ratio = len(np.unique(np.array(ngram_list), axis=0)) / len(ngram_list)
+    return uniq_ng_ratio
   else:
     return 0
 
 
 def normal_inver_diver(text):
   text_sent = sent_tokenize(text) #split sentence
-  diversity_list = []
+  unigram_list = []
 
   for sent in text_sent:
-    unigram = ngrams(word_tokenize(sent), 1)
-    unigram_list = []
+    # Word tokenize with removing stopwords: punctuations
+    stoplist = set(list(punctuation)) #( + stopwords.words('english') )
+    tokens = [token for token in word_tokenize(sent) if token not in stoplist]
 
+    unigram = ngrams(tokens, 1)
     for grams in unigram:
       unigram_list.append(grams)
 
-    # Calculate diversity of unigrams
+  if len(unigram_list) > 0:
+    # Calculate diversity of unigrams of document
     counts_dict = Counter(unigram_list)
     counts = np.array(list(counts_dict.values())) 
     prob = counts/len(unigram_list)
-
     diversity = entropy(prob)    
-    diversity_list.append(diversity)
 
-    #print("Diversity: ", diversity)
-    #print("len(unigram_list): ", len(unigram_list))
-    #print("Diversity: ", diversity)
-    # It's supported assumption: The longer document (or sentence), the higher entropy (diversity) 
+    # # Calculate nid (assumption that D in equation is Diversity)
+    # nid = 1 - diversity / np.log(np.abs(diversity))
+    # print("nid: ", nid)
 
-  #print("sum(diversity_list): ", sum(diversity_list))
+    # # Calculate nid (assumption that D in equation is Document, abs(d) = no. of sentence)
+    # nid2 = 1- diversity / np.log(len(text_sent))
+    # print("nid2: ", nid2)
 
-  # nid = 1 - (avg(diversity) / log(sum(diversity)))
-  nid = 1 - ((sum(diversity_list)/len(diversity_list))/(np.log(sum(diversity_list))))
+    # Calculate nid (assumption that D in equation is Document, abs(d) = no. of unigram)
+    nid3 = 1- diversity / np.log(len(unigram_list))
+    print("nid3: ", nid3)
 
-  return nid
+    return nid3
 
+  else:
+    return 0
+
+  
+
+
+
+  
 

@@ -15,12 +15,12 @@ with open(file_path, 'r') as f:
     text = text.lower()
     src = text.split('@highlight')[0]
 
-    uniq_unigram = unique_ngrams_ratio(src, 1)
-    uniq_bigram = unique_ngrams_ratio(src, 2)
-    uniq_trigram = unique_ngrams_ratio(src, 3)
-    print("\nUnique unigram ratio: ", uniq_unigram)
-    print("Unique bigram ratio: ", uniq_bigram)
-    print("Unique trigram ratio: ", uniq_trigram)
+    # uniq_unigram = unique_ngrams_ratio(src, 1)
+    # uniq_bigram = unique_ngrams_ratio(src, 2)
+    # uniq_trigram = unique_ngrams_ratio(src, 3)
+    # print("\nUnique unigram ratio: ", uniq_unigram)
+    # print("Unique bigram ratio: ", uniq_bigram)
+    # print("Unique trigram ratio: ", uniq_trigram)
 
     nid = normal_inver_diver(src)
     print("NID: ", nid)
