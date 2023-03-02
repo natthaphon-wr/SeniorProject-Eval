@@ -7,14 +7,25 @@ from collections import Counter
 from scipy.stats import entropy
 from string import punctuation
 
+def word_sent_count(text):
+  # Count sentences
+  sentences = sent_tokenize(text)
+  sent_count = len(sentences)
+  
+  # Count words
+  stoplist = set(list(punctuation))
+  words = [token for token in word_tokenize(text) if token not in stoplist]
+  word_count = len(words)
+
+  return sent_count, word_count
 
 def unique_ngrams_ratio(text, n):
   text_sent = sent_tokenize(text) #split sentence
   ngram_list = []
 
   for sent in text_sent:
-    # Word tokenize with removing stopwords: punctuations
-    stoplist = set(list(punctuation)) #( + stopwords.words('english') )
+    # Word tokenize with removing stopwords: punctuations (+stopwords.words('english'))
+    stoplist = set(list(punctuation))
     tokens = [token for token in word_tokenize(sent) if token not in stoplist]
 
     ngram = ngrams(tokens, n)
@@ -27,14 +38,13 @@ def unique_ngrams_ratio(text, n):
   else:
     return 0
 
-
 def normal_inver_diver(text):
   text_sent = sent_tokenize(text) #split sentence
   unigram_list = []
 
   for sent in text_sent:
-    # Word tokenize with removing stopwords: punctuations
-    stoplist = set(list(punctuation)) #( + stopwords.words('english') )
+    # Word tokenize with removing stopwords: punctuations (+stopwords.words('english'))
+    stoplist = set(list(punctuation))
     tokens = [token for token in word_tokenize(sent) if token not in stoplist]
 
     unigram = ngrams(tokens, 1)
@@ -48,26 +58,10 @@ def normal_inver_diver(text):
     prob = counts/len(unigram_list)
     diversity = entropy(prob)    
 
-    # # Calculate nid (assumption that D in equation is Diversity)
-    # nid = 1 - diversity / np.log(np.abs(diversity))
-    # print("nid: ", nid)
-
-    # # Calculate nid (assumption that D in equation is Document, abs(d) = no. of sentence)
-    # nid2 = 1- diversity / np.log(len(text_sent))
-    # print("nid2: ", nid2)
-
-    # Calculate nid (assumption that D in equation is Document, abs(d) = no. of unigram)
-    nid3 = 1- diversity / np.log(len(unigram_list))
-    print("nid3: ", nid3)
-
-    return nid3
+    # Calculate NID
+    nid = 1- diversity / np.log(len(unigram_list))
+    return nid
 
   else:
     return 0
-
-  
-
-
-
-  
 

@@ -4,7 +4,7 @@ import numpy as np
 from nltk.util import ngrams
 from nltk.tokenize import sent_tokenize, word_tokenize
 
-from metrics.redun import unique_ngrams_ratio, normal_inver_diver
+from eval_src.metrics import unique_ngrams_ratio, normal_inver_diver, word_sent_count
 
 
 cnn_path = r"raw_data\cnndm\cnn_stories\stories"
@@ -22,5 +22,9 @@ with open(file_path, 'r') as f:
     # print("Unique bigram ratio: ", uniq_bigram)
     # print("Unique trigram ratio: ", uniq_trigram)
 
-    nid = normal_inver_diver(src)
-    print("NID: ", nid)
+    # nid = normal_inver_diver(src)
+    # print("NID: ", nid)
+
+    sent_count, word_count = word_sent_count(src)
+    print("Sent count: ", sent_count)
+    print("Word count: ", word_count)
