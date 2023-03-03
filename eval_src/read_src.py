@@ -93,22 +93,6 @@ def sum_result(path1, path2, redun_metric):
 
   return dict_result, total_doc
 
-# Compare Redundancy of cnndm and financial
-def compare_redun():
-  cnn_path = r"raw_data\cnndm\cnn_stories\stories"
-  dm_path = r"raw_data\cnndm\dailymail_stories\stories"
-  bbc_path = r"raw_data\finance_preprocessed\BBC_News"
-  eest_path = r"raw_data\finance_preprocessed\eest"
-
-  dict_cnndm, total_cnndm = sum_result(cnn_path, dm_path)
-  dict_fin, total_fin = sum_result(bbc_path, eest_path)
-
-
-
-
-
-  return 1
-
 
 
 
