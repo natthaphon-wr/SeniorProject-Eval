@@ -5,3 +5,5 @@
 *.txt
 *.xlsx
 *.pyc
+news_rapid_api/*
+preprocess/token_api.py
