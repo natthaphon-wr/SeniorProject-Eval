@@ -48,8 +48,6 @@ def open_src_redun(path):
     if file.endswith(".story"): 
       file_path = f"{path}\{file}"
       with open(file_path, 'r', encoding="utf8") as f:
-        print("...processing")
-
         text = f.read()
         text = text.lower()
         src = text.split('@highlight')[0]
