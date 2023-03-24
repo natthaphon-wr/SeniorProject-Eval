@@ -1,40 +1,39 @@
-from read_src import open_src_count, open_src_redun, sum_result
+import pandas as pd
+from read_src import open_src_count, open_src_redun
 
 cnn_path = r"raw_data\cnndm\cnn_stories\stories"
 dm_path = r"raw_data\cnndm\dailymail_stories\stories"
-bbc_path = r"raw_data\finance_preprocessed\BBC_News"
-eest_path = r"raw_data\finance_preprocessed\eest"
+
+bbc_path = r"raw_data\finance_preprocessed_final\BBC"
+bloomberg_path = r"raw_data\finance_preprocessed_final\Bloomberg"
+eest_path = r"raw_data\finance_preprocessed_final\eest"
 
 # CNN dataset
-dict_cnn, count_cnn = open_src_count(cnn_path)
+mean_cnn, count_cnn, df_cnn = open_src_count(cnn_path)
 print("Total CNN Documents: ", count_cnn)
-for key in dict_cnn:
-  print(key, ": ", dict_cnn[key])
+print(mean_cnn)
+df_cnn.to_csv(r"eval_src\result/cnn_count.csv", sep=',', index=False)
 
 # Dailymail dataset
-dict_dm, count_dm = open_src_count(dm_path)
-print("Total Dailymail Documents: ", count_dm)
-for key in dict_dm:
-  print(key, ": ", dict_dm[key])
+mean_dm, count_dm, df_dm = open_src_count(dm_path)
+print("Total Daily Mail Documents: ", count_dm)
+print(mean_dm)
+df_dm.to_csv(r"eval_src\result/dm_count.csv", sep=',', index=False)
 
+# BBC dataset
+mean_bbc, count_bbc, df_bbc = open_src_count(bbc_path)
+print("Total BBC Documents: ", count_bbc)
+print(mean_bbc)
+df_bbc.to_csv(r"eval_src\result/bbc_count.csv", sep=',', index=False)
 
+# Bloomberg dataset
+mean_bloom, count_bloom, df_bloom = open_src_count(bloomberg_path)
+print("Total Bloomberg Documents: ", count_bloom)
+print(mean_bloom)
+df_bloom.to_csv(r"eval_src\result/bloomberg_count.csv", sep=',', index=False)
 
-# Fiancial700 avg. doc/summary length
-# dict_fin_count, total_fin = sum_result(bbc_path, eest_path, redun_metric=False)
-# print("Total Financial700 Documents: ", total_fin)
-# for key in dict_fin_count:
-#   print(key, ": ", dict_fin_count[key])
-
-# # BBC dataset
-# dict_bbc, count_bbc = open_src_count(bbc_path)
-# print("Total BBC Documents: ", count_bbc)
-# for key in dict_bbc:
-#   print(key, ": ", dict_bbc[key])
-
-# # EEST dataset
-# dict_eest, count_eest = open_src_count(eest_path)
-# print("Total EEST Documents: ", count_eest)
-# for key in dict_eest:
-#   print(key, ": ", dict_eest[key])
-
-
+# EEST dataset
+mean_eest, count_eest, df_eest = open_src_count(eest_path)
+print("Total EEST Documents: ", count_eest)
+print(mean_eest)
+df_eest.to_csv(r"eval_src\result/eest_count.csv", sep=',', index=False)
